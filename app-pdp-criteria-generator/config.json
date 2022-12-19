@@ -1,0 +1,10 @@
+{
+    "sfiaProcessedSpreadsheetLocation":"../sfia-processed-resources/1671484307-SFIA-Skill-Criteria.xlsx", 
+    "processedOutputFolder":"../",
+    "exportFormat":"EXCEL",
+    "defaultSkills":"Autonomy,Influence,Complexity,Business skills,Knowledge",
+    "skillColumn":"A",
+    "sfiaColumn":"B",
+    "keyColumn":"C",
+    "keyDescriptionColumn":"D"
+}

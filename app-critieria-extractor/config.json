@@ -1,0 +1,7 @@
+{
+    "sfiaSpreadsheetLocation":"../sfia-resources/sfia-8_en_220221-2.xlsx", 
+    "responsibilitiesMappingsLocation":"../sfia-resources/sfia-mapping-responsibilites.json",
+    "skillMappingsLocation":"../sfia-resources/sfia-mapping-skills.json",
+    "processedOutputFolder":"../sfia-processed-resources/",
+    "exportFormat":"EXCEL"
+}
