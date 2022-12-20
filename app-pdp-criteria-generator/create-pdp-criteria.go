@@ -41,7 +41,13 @@ func main() {
 	
 	flag.Parse()
 
-	var skills = append(flag.Args(), strings.Split(config.DefaultSkills,",")...)
+	var skills []string = []string{}
+	if contains(flag.Args(), "CORE") {
+		skills = append(flag.Args(), strings.Split(config.DefaultSkills,",")...)
+	} else {
+		skills = append(flag.Args())
+	}
+
     file, err := excelize.OpenFile(config.SFIAProcessedSpreadsheetLocation)
     if err != nil {
         log.Fatal(err)
@@ -54,8 +60,6 @@ func main() {
 
 	var rowCount int = 2
 	var applicableSkills []PostSkillDataModel
-
-	fmt.Println(sfiaLevel)
 
 	for {
 
