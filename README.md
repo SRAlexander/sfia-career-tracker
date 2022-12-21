@@ -25,8 +25,10 @@ Finally, in the "app-critiera-extractor" folder, in the config file, set the nam
 
 If you have the requirements above and have followed the steps you can run the following to create all SFIA criteria for all levels as a single Excel sheet...
 
+```
 cd app-criteria-extractor (go into the folder)
 go run sfia-to-format.go
+```
 
 You should now find a timestamped file in the "sfia-processed-resources" folder.
 
@@ -40,21 +42,27 @@ If you have any custom org requirements I would also recommend adding them to th
 
 To create the SFIA-level requirements run the following command.
 
+```
 cd app-pdp-criteria-generator (go into the folder)
 go run create-pdp-criteria.go -sfia-level x CORE
+```
 
 Where x is the SFIA level you are generating against. 
 This command will pull out all SFIA requirements for an individual acting at SFIA level x for all "defaultSkills" defined in the config.json. The generated file can be found in the root directory of the project.
 
 To generate additional skill requirements for a specific role for example for a software developer in a data engineering role. You can run the following...
 
+```
 go run create-pdp-criteria.go -sfia-level 4 CORE PROG DENG
+```
 
 This will create a full job spec of requirements against SFIA. 
 
 The tool also allows skill-only lookups by removing "CORE" from the command e.g.
 
+```
 go run create-pdp-criteria.go -sfia-level 3 PROG
+```
 
 A full list of supported skills as of SFIA Version 8 can be found below. 
 
