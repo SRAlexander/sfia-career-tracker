@@ -2,7 +2,7 @@
 
 This project is designed to create a SFIA grading checklist based on an individual's target SFIA level and their required job skills. It is designed not only to manage SFIA-specific criteria but also to accommodate organisation-specific criteria. 
 
-# Requirments
+# Requirements
 
 - A version of Go which can be downloaded from https://go.dev/dl/
 - A copy of the SFIA Framework which can be acquired at https://sfia-online.org/en/sfia-8/documentation, an account is required.
