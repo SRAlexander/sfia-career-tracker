@@ -68,125 +68,125 @@ A full list of supported skills as of SFIA Version 8 can be found below.
 
 # Skills
 
-Acceptance testing                          BPTS
-Animation development                       ADEV
-Application support                         ASUP
-Asset management                            ASMG
-Audit                                       AUDT
-Availability management                     AVMT
-Benefits management                         BENM
-Business administration                     ADMN
-Business intelligence                       BINT
-Business modelling                          BSMO
-Business process improvement                BPRE
-Business situation analysis                 BUSA
-Capacity management                         CPMG
-Certification scheme operation              CSOP
-Change control                              CHMG
-Competency assessment                       LEDA
-Configuration management                    CFMG
-Consultancy                                 CNSL
-Content authoring                           INCA
-Content publishing                          ICPM
-Continuity management                       COPL
-Contract management                         ITCM
-Customer service support                    CSMG
-Data engineering                            DENG
-Data management                             DATM
-Data modelling and design                   DTAN
-Data science                                DATS
-Data visualisation                          VISL
-Database administration                     DBAD
-Database design                             DBDS
-Demand management                           DEMM
-Digital forensics                           DGFS
-Emerging technology monitoring              EMRG
-Employee experience                         EEXP
-Enterprise and business architecture        STPL
-Facilities management                       DCMA
-Feasibility assessment                      FEAS
-Financial management                        FMIT
-Governance                                  GOVN
-Hardware design                             HWDE
-High-performance computing                  HPCC
-Incident management                         USUP
-Information assurance                       INAS
-Information management                      IRMG
-Information security                        SCTY
-Information systems coordination            ISCO
-Innovation                                  INOV
-Investment appraisal                        INVA
-IT infrastructure                           ITOP
-Knowledge management                        KNOW
-Learning and development management         ETMG
-Learning delivery                           ETDL
-Learning design and development             TMCR
-Machine learning                            MLNG
-Marketing                                   MKTG
-Measurement                                 MEAS
-Methods and tools                           METL
-Network design                              NTDS
-Network support                             NTAS
-Numerical analysis                          NUAN
-Organisation design and implementation      ORDI
-Organisational capability development       OCDV
-Organisational change management            CIPM
-Organisational facilitation                 OFCL
-Penetration testing                         PENT
-Performance management                      PEMT
-Personal data protection                    PEDP
-Portfolio management                        POMG
-Portfolio, programme and project support    PROF
-Problem management                          PBMG
-Product management                          PROD
-Professional development                    PDSV
-Programme management                        PGMG
-Programming/software development            PROG
-Project management                          PRMG
-Quality assurance                           QUAS
-Quality management                          QUMG
-Radio frequency engineering                 RFEN
-Real-time/embedded systems development      RESD
-Release and deployment                      RELM
-Requirements definition and management      REQM
-Research                                    RSCH
-Resourcing                                  RESC
-Risk management                             BURM
-Safety assessment                           SFAS
-Safety engineering                          SFEN
-Sales support                               SSUP
-Scientific modelling                        SCMO
-Security operations                         SCAD
-Selling                                     SALE
-Service acceptance                          SEAC
-Service catalogue management                SCMG
-Service level management                    SLMO
-Software configuration                      PORT
-Software design                             SWDN
-Solution architecture                       ARCH
-Sourcing                                    SORC
-Specialist advice                           TECH
-Stakeholder relationship management         RLMT
-Storage management                          STMG
-Strategic planning                          ITSP
-Subject formation                           SUBF
-Supplier management                         SUPP
-Sustainability                              SUST
-System software                             SYSP
-Systems and software life cycle engineering SLEN
-Systems design                              DESN
-Systems development management              DLMG
-Systems installation and removal            HSIN
-Systems integration and build               SINT
-Teaching                                    TEAC
-Technology service management               ITMG
-Testing                                     TEST
-Threat intelligence                         THIN
-User experience analysis                    UNAN
-User experience design                      HCEV
-User experience evaluation                  USEV
-User research                               URCH
-Vulnerability assessment                    VUAS
-Vulnerability research                      VURE
-Workforce planning                          WFPL
+- Acceptance testing                          BPTS
+- Animation development                       ADEV
+- Application support                         ASUP
+- Asset management                            ASMG
+- Audit                                       AUDT
+- Availability management                     AVMT
+- Benefits management                         BENM
+- Business administration                     ADMN
+- Business intelligence                       BINT
+- Business modelling                          BSMO
+- Business process improvement                BPRE
+- Business situation analysis                 BUSA
+- Capacity management                         CPMG
+- Certification scheme operation              CSOP
+- Change control                              CHMG
+- Competency assessment                       LEDA
+- Configuration management                    CFMG
+- Consultancy                                 CNSL
+- Content authoring                           INCA
+- Content publishing                          ICPM
+- Continuity management                       COPL
+- Contract management                         ITCM
+- Customer service support                    CSMG
+- Data engineering                            DENG
+- Data management                             DATM
+- Data modelling and design                   DTAN
+- Data science                                DATS
+- Data visualisation                          VISL
+- Database administration                     DBAD
+- Database design                             DBDS
+- Demand management                           DEMM
+- Digital forensics                           DGFS
+- Emerging technology monitoring              EMRG
+- Employee experience                         EEXP
+- Enterprise and business architecture        STPL
+- Facilities management                       DCMA
+- Feasibility assessment                      FEAS
+- Financial management                        FMIT
+- Governance                                  GOVN
+- Hardware design                             HWDE
+- High-performance computing                  HPCC
+- Incident management                         USUP
+- Information assurance                       INAS
+- Information management                      IRMG
+- Information security                        SCTY
+- Information systems coordination            ISCO
+- Innovation                                  INOV
+- Investment appraisal                        INVA
+- IT infrastructure                           ITOP
+- Knowledge management                        KNOW
+- Learning and development management         ETMG
+- Learning delivery                           ETDL
+- Learning design and development             TMCR
+- Machine learning                            MLNG
+- Marketing                                   MKTG
+- Measurement                                 MEAS
+- Methods and tools                           METL
+- Network design                              NTDS
+- Network support                             NTAS
+- Numerical analysis                          NUAN
+- Organisation design and implementation      ORDI
+- Organisational capability development       OCDV
+- Organisational change management            CIPM
+- Organisational facilitation                 OFCL
+- Penetration testing                         PENT
+- Performance management                      PEMT
+- Personal data protection                    PEDP
+- Portfolio management                        POMG
+- Portfolio, programme and project support    PROF
+- Problem management                          PBMG
+- Product management                          PROD
+- Professional development                    PDSV
+- Programme management                        PGMG
+- Programming/software development            PROG
+- Project management                          PRMG
+- Quality assurance                           QUAS
+- Quality management                          QUMG
+- Radio frequency engineering                 RFEN
+- Real-time/embedded systems development      RESD
+- Release and deployment                      RELM
+- Requirements definition and management      REQM
+- Research                                    RSCH
+- Resourcing                                  RESC
+- Risk management                             BURM
+- Safety assessment                           SFAS
+- Safety engineering                          SFEN
+- Sales support                               SSUP
+- Scientific modelling                        SCMO
+- Security operations                         SCAD
+- Selling                                     SALE
+- Service acceptance                          SEAC
+- Service catalogue management                SCMG
+- Service level management                    SLMO
+- Software configuration                      PORT
+- Software design                             SWDN
+- Solution architecture                       ARCH
+- Sourcing                                    SORC
+- Specialist advice                           TECH
+- Stakeholder relationship management         RLMT
+- Storage management                          STMG
+- Strategic planning                          ITSP
+- Subject formation                           SUBF
+- Supplier management                         SUPP
+- Sustainability                              SUST
+- System software                             SYSP
+- Systems and software life cycle engineering SLEN
+- Systems design                              DESN
+- Systems development management              DLMG
+- Systems installation and removal            HSIN
+- Systems integration and build               SINT
+- Teaching                                    TEAC
+- Technology service management               ITMG
+- Testing                                     TEST
+- Threat intelligence                         THIN
+- User experience analysis                    UNAN
+- User experience design                      HCEV
+- User experience evaluation                  USEV
+- User research                               URCH
+- Vulnerability assessment                    VUAS
+- Vulnerability research                      VURE
+- Workforce planning                          WFPL
 
