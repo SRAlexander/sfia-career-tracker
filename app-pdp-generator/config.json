@@ -1,0 +1,10 @@
+{
+    "templateLocation":"../pdp-resources/template.MD", 
+    "processedOutputFolder":"./output/",
+    "exportFormat":"EXCEL",
+    "defaultSkills":"Autonomy,Influence,Complexity,Business skills,Knowledge",
+    "skillColumn":"A",
+    "sfiaColumn":"B",
+    "keyColumn":"C",
+    "keyDescriptionColumn":"D"
+}
