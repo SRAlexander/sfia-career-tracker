@@ -6,9 +6,6 @@ import (
 	"log"
 	"os"
 	"strings"
-
-	// "strings"
-	// "time"
 	"encoding/json"
 	"io/ioutil"
 	"strconv"
@@ -96,6 +93,7 @@ func generateSkills(config Config, sfiaSkillsFile string) SkillResponse {
 
 	var skills []string
 	var detailedSkills []SkillDataModel
+	var blankLinesFound int = 0
 
 	for {
 
@@ -105,36 +103,44 @@ func generateSkills(config Config, sfiaSkillsFile string) SkillResponse {
 		}
 
 		if columnSkillCode == "" {
-			break
+			blankLinesFound++
+			if blankLinesFound > 1 {
+				break;
+			}
+		} else {
+			if !contains(skills, columnSkillCode) {
+				if blankLinesFound > 0 {
+					skills = append(skills, columnSkillCode + " (SPECIALISM)")
+				} else {
+					skills = append(skills, columnSkillCode)
+				}
+			}
+
+			columnKeyNumber, err := file.GetCellValue("Sheet1", keyCodeColumn+strconv.Itoa(rowCount))
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			columnKeyDescription, err := file.GetCellValue("Sheet1", keyDescriptionColumn+strconv.Itoa(rowCount))
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			columnSFIALevel, err := file.GetCellValue("Sheet1", sfiaColumn+strconv.Itoa(rowCount))
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			var foundSkill SkillDataModel
+			foundSkill.SkillCode = columnSkillCode
+			foundSkill.SFIALevel = columnSFIALevel
+			foundSkill.KeyPointNumber = columnKeyNumber
+			foundSkill.KeyPointDescription = columnKeyDescription
+			detailedSkills = append(detailedSkills, foundSkill)
+
 		}
-
-		if !contains(skills, columnSkillCode) {
-			skills = append(skills, columnSkillCode)
-		}
-
-		columnKeyNumber, err := file.GetCellValue("Sheet1", keyCodeColumn+strconv.Itoa(rowCount))
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		columnKeyDescription, err := file.GetCellValue("Sheet1", keyDescriptionColumn+strconv.Itoa(rowCount))
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		columnSFIALevel, err := file.GetCellValue("Sheet1", sfiaColumn+strconv.Itoa(rowCount))
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		var foundSkill SkillDataModel
-		foundSkill.SkillCode = columnSkillCode
-		foundSkill.SFIALevel = columnSFIALevel
-		foundSkill.KeyPointNumber = columnKeyNumber
-		foundSkill.KeyPointDescription = columnKeyDescription
-		detailedSkills = append(detailedSkills, foundSkill)
-
 		rowCount++
+		
 	}
 
 	var skillResponse SkillResponse

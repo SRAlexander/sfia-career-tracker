@@ -42,19 +42,48 @@ func main() {
 
 	var outputFilename string
 	flag.StringVar(&outputFilename, "output-filename", "./", "What would you like to name the output file?")
+
+	var coreSkillsInput string
+	flag.StringVar(&coreSkillsInput, "core-skills", "CORE", "What are your Core Skills for this role?")
+
+	var specialismSkillsInput string
+	flag.StringVar(&specialismSkillsInput, "specialism-skills", "", "What are your Specialism Skills for this role?")
 	flag.Parse()
 
 	var skills []string = []string{}
-	if contains(flag.Args(), "CORE") {
-		skills = append(flag.Args(), strings.Split(config.DefaultSkills, ",")...)
-	} else {
-		skills = append(flag.Args())
-	}
+	if strings.Index(coreSkillsInput, "CORE") != -1 {
+		coreSkillsInput = strings.Replace(coreSkillsInput, "CORE", config.DefaultSkills + ",", -1)
+	} 
+
+	coreSkillsInput = strings.Replace(coreSkillsInput, " ", "", -1)
+	skills = append(skills, strings.Split(coreSkillsInput, ",")...)
+
+	specialismSkillsInput = strings.Replace(specialismSkillsInput, " ", "", -1)
+	var specialismSkills []string = []string{}
+	specialismSkills = append(specialismSkills, strings.Split(specialismSkillsInput, ",")...)
 
 	file, err := excelize.OpenFile(config.SFIAProcessedSpreadsheetLocation)
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	var applicableSkills = searchAndCreateSkillsModel(file, config, skills,sfiaLevel)
+	var specialismApplicableSkills = searchAndCreateSkillsModel(file, config, specialismSkills, sfiaLevel)
+
+	// output JSON file
+	var currentTimestamp = time.Now().Unix()
+	// if config.ExportFormat == "JSON" {
+	// 	exportAsJSON(applicableSkills, specialismApplicableSkills, config.ProcessedOutputFolder, currentTimestamp, outputFilename)
+	// }
+
+	if config.ExportFormat == "EXCEL" {
+		exportAsExcel(applicableSkills, specialismApplicableSkills, config.ProcessedOutputFolder, currentTimestamp, outputFilename)
+	}
+
+	fmt.Println("Created " + config.ProcessedOutputFolder + outputFilename)
+}
+
+func searchAndCreateSkillsModel(file *excelize.File, config Config, skills []string, sfiaLevel int) []PostSkillDataModel {
 
 	var skillColumn string = config.SkillColumn
 	var sfiaColumn string = config.SFIAColumn
@@ -92,7 +121,6 @@ func main() {
 				var sfiaInt, errConvert = strconv.Atoi(columnKeyNumber)
 				if errConvert != nil {
 					fmt.Println("Error during conversion")
-					return
 				}
 
 				var foundSkill PostSkillDataModel
@@ -111,17 +139,7 @@ func main() {
 		rowCount++
 	}
 
-	// output JSON file
-	var currentTimestamp = time.Now().Unix()
-	if config.ExportFormat == "JSON" {
-		exportAsJSON(applicableSkills, config.ProcessedOutputFolder, currentTimestamp, outputFilename)
-	}
-
-	if config.ExportFormat == "EXCEL" {
-		exportAsExcel(applicableSkills, config.ProcessedOutputFolder, currentTimestamp, outputFilename)
-	}
-
-	fmt.Println("Created " + config.ProcessedOutputFolder + outputFilename)
+	return applicableSkills
 }
 
 func loadJSONFileAsByteString(file string) []byte {
@@ -149,35 +167,50 @@ func contains(s []string, str string) bool {
 	return false
 }
 
-func exportAsJSON(skillModels []PostSkillDataModel, outputLocation string, currentTimestamp int64, outputFilename string) {
+// func exportAsJSON(skillModels []PostSkillDataModel,  specialismSkillModels []PostSkillDataModel, outputLocation string, currentTimestamp int64, outputFilename string) {
 
-	jsonContent, err := json.Marshal(skillModels)
-	if err != nil {
-		fmt.Println(err)
-	}
+// 	jsonContent, err := json.Marshal(skillModels)
+// 	if err != nil {
+// 		fmt.Println(err)
+// 	}
 
-	var jsonOutputLocation string = outputLocation + strconv.Itoa(int(currentTimestamp)) + "-SFIA-Skill-PDP.json"
-	jsonOutputLocation = outputLocation + outputFilename
-	err = ioutil.WriteFile(jsonOutputLocation, jsonContent, 0644)
-	if err != nil {
-		log.Fatal(err)
-	}
+// 	specialismJsonContent, err := json.Marshal(specialismSkillModels)
+// 	if err != nil {
+// 		fmt.Println(err)
+// 	}
 
-}
+// 	var jsonOutputLocation string = outputLocation + strconv.Itoa(int(currentTimestamp)) + "-SFIA-Skill-PDP.json"
+// 	jsonOutputLocation = outputLocation + outputFilename
+// 	err = ioutil.WriteFile(jsonOutputLocation, jsonContent, 0644)
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
 
-func exportAsExcel(skillModels []PostSkillDataModel, outputLocation string, currentTimestamp int64, outputFilename string) {
+// }
+
+func exportAsExcel(skillModels []PostSkillDataModel, specialismSkillModels []PostSkillDataModel, outputLocation string, currentTimestamp int64, outputFilename string) {
 	file := excelize.NewFile()
 	file.SetCellValue("Sheet1", "A1", "SkillCode")
 	file.SetCellValue("Sheet1", "B1", "SFIA Level")
 	file.SetCellValue("Sheet1", "C1", "Keycode")
 	file.SetCellValue("Sheet1", "D1", "Description")
 
+	var insertLocation int = 1
 	for skillItem := 0; skillItem < len(skillModels); skillItem++ {
-		var insertLocation int = skillItem + 2
+		insertLocation += 1;
 		file.SetCellValue("Sheet1", "A"+strconv.Itoa(insertLocation), skillModels[skillItem].SkillCode)
 		file.SetCellValue("Sheet1", "B"+strconv.Itoa(insertLocation), skillModels[skillItem].SFIALevel)
 		file.SetCellValue("Sheet1", "C"+strconv.Itoa(insertLocation), skillModels[skillItem].KeyPointNumber)
 		file.SetCellValue("Sheet1", "D"+strconv.Itoa(insertLocation), skillModels[skillItem].KeyPointDescription)
+	}
+
+	insertLocation += 1; // Leave a space
+	for skillItem := 0; skillItem < len(specialismSkillModels); skillItem++ {
+		insertLocation += 1;
+		file.SetCellValue("Sheet1", "A"+strconv.Itoa(insertLocation), specialismSkillModels[skillItem].SkillCode)
+		file.SetCellValue("Sheet1", "B"+strconv.Itoa(insertLocation), specialismSkillModels[skillItem].SFIALevel)
+		file.SetCellValue("Sheet1", "C"+strconv.Itoa(insertLocation), specialismSkillModels[skillItem].KeyPointNumber)
+		file.SetCellValue("Sheet1", "D"+strconv.Itoa(insertLocation), specialismSkillModels[skillItem].KeyPointDescription)
 	}
 
 	var jsonOutputLocation string = outputLocation + strconv.Itoa(int(currentTimestamp)) + "-SFIA-Skill-PDP.xlsx"
