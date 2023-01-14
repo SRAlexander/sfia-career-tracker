@@ -1,10 +1,9 @@
 {
-    "sfiaProcessedSpreadsheetLocation":"../sfia-processed-resources/1671573058-SFIA-Skill-Criteria.xlsx", 
-    "processedOutputFolder":"./output/",
-    "exportFormat":"EXCEL",
-    "defaultSkills":"Autonomy,Influence,Complexity,Business skills,Knowledge",
-    "skillColumn":"A",
-    "sfiaColumn":"B",
-    "keyColumn":"C",
-    "keyDescriptionColumn":"D"
+    "sfiaJobSpecLocation":"../pdp-resources/job-roles.xlsx",
+    "sfiaJobSpecSheetName":"Job Roles", 
+    "jobTitleColumn":"A",
+    "sfiaLevelColumn":"B",
+    "filenameColumn":"C",
+    "coreSkillsColumn":"D",
+    "specialismSkillsColumn":"E"
 }
