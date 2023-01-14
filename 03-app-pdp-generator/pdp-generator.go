@@ -53,6 +53,7 @@ func main() {
 	var createdPDP = generatePDP(skillModel, config.TemplateLocation)
 	savePDP(config, createdPDP, outputFilename)
 
+	fmt.Println("Created " + config.ProcessedOutputFolder + outputFilename)
 }
 
 func loadJSONFileAsByteString(file string) []byte {
@@ -64,7 +65,6 @@ func loadJSONFileAsByteString(file string) []byte {
 		fmt.Println(err)
 	}
 
-	fmt.Println("Successfully Opened: " + file)
 	byteValue, _ := ioutil.ReadAll(jsonFile)
 	jsonFile.Close()
 	return byteValue
@@ -211,40 +211,3 @@ func savePDP(config Config, pdpContents string, outputFilename string) {
 		log.Fatal(err2)
 	}
 }
-
-// func exportAsJSON(skillModels []SkillDataModel, outputLocation string, currentTimestamp int64) {
-
-// 	jsonContent, err := json.Marshal(skillModels)
-// 	if err != nil {
-// 		fmt.Println(err)
-// 	}
-
-// 	var jsonOutputLocation string = outputLocation + strconv.Itoa(int(currentTimestamp)) + "-SFIA-Skill-PDP.json"
-// 	err = ioutil.WriteFile(jsonOutputLocation, jsonContent, 0644)
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-
-// }
-
-// func exportAsExcel(skillModels []SkillDataModel, outputLocation string, currentTimestamp int64) {
-// 	file := excelize.NewFile()
-
-// 	file.SetCellValue("Sheet1", "A1", "SkillCode")
-// 	file.SetCellValue("Sheet1", "B1", "SFIA Level")
-// 	file.SetCellValue("Sheet1", "C1", "Keycode")
-// 	file.SetCellValue("Sheet1", "D1", "Description")
-
-// 	for skillItem := 0; skillItem < len(skillModels); skillItem++ {
-// 		var insertLocation int = skillItem + 2
-// 		file.SetCellValue("Sheet1", "A"+strconv.Itoa(insertLocation), skillModels[skillItem].SkillCode)
-// 		file.SetCellValue("Sheet1", "B"+strconv.Itoa(insertLocation), skillModels[skillItem].SFIALevel)
-// 		file.SetCellValue("Sheet1", "C"+strconv.Itoa(insertLocation), skillModels[skillItem].KeyPointNumber)
-// 		file.SetCellValue("Sheet1", "D"+strconv.Itoa(insertLocation), skillModels[skillItem].KeyPointDescription)
-// 	}
-
-// 	var jsonOutputLocation string = outputLocation + strconv.Itoa(int(currentTimestamp)) + "-SFIA-Skill-PDP.xlsx"
-// 	if err := file.SaveAs(jsonOutputLocation); err != nil {
-// 		log.Fatal(err)
-// 	}
-// }

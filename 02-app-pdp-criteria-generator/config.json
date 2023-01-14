@@ -1,6 +1,6 @@
 {
-    "templateLocation":"../pdp-resources/template.MD", 
-    "processedOutputFolder":"./output/",
+    "sfiaProcessedSpreadsheetLocation":"../outputs/app-criteria-extractor/1671573058-SFIA-Skill-Criteria.xlsx", 
+    "processedOutputFolder":"../outputs/app-pdp-criteria-generator/",
     "exportFormat":"EXCEL",
     "defaultSkills":"Autonomy,Influence,Complexity,Business skills,Knowledge",
     "skillColumn":"A",
