@@ -1,14 +1,14 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
-	"strings"
-	"encoding/json"
-	"io/ioutil"
 	"strconv"
+	"strings"
 
 	"github.com/xuri/excelize/v2"
 )
@@ -31,6 +31,7 @@ type SkillDataModel struct {
 
 type SkillResponse struct {
 	Skills         []string
+	Specialisms    []string
 	DetailedSkills []SkillDataModel
 }
 
@@ -92,6 +93,7 @@ func generateSkills(config Config, sfiaSkillsFile string) SkillResponse {
 	var rowCount int = 2
 
 	var skills []string
+	var specialisms []string
 	var detailedSkills []SkillDataModel
 	var blankLinesFound int = 0
 
@@ -105,12 +107,13 @@ func generateSkills(config Config, sfiaSkillsFile string) SkillResponse {
 		if columnSkillCode == "" {
 			blankLinesFound++
 			if blankLinesFound > 1 {
-				break;
+				break
 			}
 		} else {
 			if !contains(skills, columnSkillCode) {
 				if blankLinesFound > 0 {
-					skills = append(skills, columnSkillCode + " (SPECIALISM)")
+					skills = append(skills, columnSkillCode)
+					specialisms = append(specialisms, columnSkillCode)
 				} else {
 					skills = append(skills, columnSkillCode)
 				}
@@ -140,11 +143,12 @@ func generateSkills(config Config, sfiaSkillsFile string) SkillResponse {
 
 		}
 		rowCount++
-		
+
 	}
 
 	var skillResponse SkillResponse
 	skillResponse.Skills = skills
+	skillResponse.Specialisms = specialisms
 	skillResponse.DetailedSkills = detailedSkills
 
 	return skillResponse
@@ -170,7 +174,11 @@ func generatePDP(skillModel SkillResponse, templateLocation string) string {
 	// SKILLS
 	var prefixedSkills []string
 	for skillIndex := 0; skillIndex < len(skillModel.Skills); skillIndex++ {
-		prefixedSkills = append(prefixedSkills, "* "+skillModel.Skills[skillIndex])
+		var skillTitle = skillModel.Skills[skillIndex]
+		if contains(skillModel.Specialisms, skillTitle) {
+			skillTitle = skillTitle + " (Specialism)"
+		}
+		prefixedSkills = append(prefixedSkills, "* "+skillTitle)
 	}
 
 	var skillsInsert = strings.Join(prefixedSkills, "\n")
@@ -181,9 +189,13 @@ func generatePDP(skillModel SkillResponse, templateLocation string) string {
 	for skillIndex := 0; skillIndex < len(skillModel.Skills); skillIndex++ {
 
 		var checkingSkill = skillModel.Skills[skillIndex]
+		var skillTitle = checkingSkill
+		if contains(skillModel.Specialisms, checkingSkill) {
+			skillTitle = skillTitle + " (Specialism)"
+		}
 
 		skillChecklists += "  \n  \n"
-		skillChecklists += "### Skill Group: " + checkingSkill + "  \n  \n"
+		skillChecklists += "### Skill Group: " + skillTitle + "  \n  \n"
 		skillChecklists += "| ID  | Description  | Date  | Signed off By  |  \n"
 		skillChecklists += "|---|---|---|---|  \n"
 
