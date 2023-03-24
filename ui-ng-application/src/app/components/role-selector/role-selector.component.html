@@ -1,0 +1,6 @@
+<div class="form-group">
+    <label for="form-role">Role</label>
+    <select class="form-control" id="form-role" (change)="onRoleSelectedEvent($event)">
+        <option *ngFor="let role of primaryRoles; index as i">{{role}}</option>
+    </select>
+</div>

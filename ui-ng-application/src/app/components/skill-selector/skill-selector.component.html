@@ -1,0 +1,30 @@
+<div class="form-group">
+    <label for="form-skill">Selected Core Skills</label>
+
+    <div class="form-skill" *ngFor="let selectedSkill of selectedCoreSkills; index as j">
+        <button class="btn btn-secondary col-10 disabled">{{selectedSkill.title}}</button>
+        <button class="btn btn-danger col-2" (click)="removeCoreSkill(j)"><ng-icon name="bootstrapXCircleFill"></ng-icon></button>
+    </div>
+
+    <label for="form-skill">Add Skill</label>
+
+    <select class="form-control" id="form-select-skill" (change)="addCoreSkill($event)">
+        <option *ngFor="let skill of avaliableSkills; index as i">{{skill.title}}</option>
+    </select>
+</div>
+
+<div class="form-group">
+    <label for="form-skill">Selected Specialism Skills</label>
+
+    <div class="form-skill" *ngFor="let selectedSkill of selectedSpecialismSkills; index as j">
+        <button class="btn btn-secondary col-10 disabled">{{selectedSkill.title}}</button>
+        <button class="btn btn-danger col-2" (click)="removeSpecialismSkill(j)"><ng-icon name="bootstrapXCircleFill"></ng-icon></button>
+    </div>
+    <br>
+    <label for="form-skill">Add Skill</label>
+    
+
+    <select class="form-control" id="form-select-skill" (change)="addSpecialismSkill($event)">
+        <option *ngFor="let skill of avaliableSkills; index as i">{{skill.title}}</option>
+    </select>
+</div>

@@ -1,0 +1,115 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
+
+#site-navigation {
+    padding: 8px 12px 8px 12px; 
+}
+
+#navbar-brand-image {
+    height:30px;
+    width:160px;
+}
+
+#navbar-brand-text-container {
+    display: inline-block;
+}
+
+#navbar-brand-text {
+    padding-left:8px;
+    padding-top: 4px;
+    display: inline-block;
+}
+
+.parallax-main-one {
+    /* The image used */
+    background-image: url("assets/images/img_parallax.jpg");
+  
+    /* Set a specific height */
+    min-height: 600px;
+  
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .parallax-splitter-dark {
+
+    //  min-height: 100px;
+  
+    // /* Create the parallax scrolling effect */
+    // background-attachment: fixed;
+    // background-position: center;
+    // background-repeat: no-repeat;
+    // background-size: cover;
+     background-color: rgba(0,0,0,0.55);
+    // opacity: 0.55;
+
+    display: flex;
+    justify-content: center;
+  }
+
+  .parallax-main-two {
+    /* The image used */
+    background-image: url("assets/images/img_parallax3.jpg");
+  
+    /* Set a specific height */
+    min-height: 600px;
+  
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  #menu-block {
+    width:80%;
+    min-height: 180px;
+    margin: -440px;
+    position: absolute;
+    border: 8px  solid rgba(0,0,0,0.55);
+    background-color: rgba(0,0,0,0.9);
+    color: white;
+    display: flex;
+    justify-content: center;
+    padding: 2% 0 2% 0;
+  }
+
+  #menu-block-secondary {
+    width:80%;
+    min-height: 100px;
+    margin: -250px;
+    position: absolute;
+    border: 8px  solid rgba(0,0,0,0.55);
+    background-color: rgba(0,0,0,0.9);
+    color: white;
+    display: flex;
+    justify-content: center;
+    padding: 2% 0 2% 0;
+  }
+
+  .form-group {
+    padding: 12px 0 12px 0;
+  }
+
+  .submit-button {
+    margin-top: 24px;
+  }
+
+  #selected-role-viewer-container {
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 1rem;
+    color: black;
+    padding:16px
+  }
+
+//   #menu-block .menu-content-container {
+//     width:96%;
+//     background-color: rgba(0,0,0,0.95);
+//     min-height: 90%;
+//   }

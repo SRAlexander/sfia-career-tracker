@@ -1,0 +1,50 @@
+[
+    {
+        "type": "Software Engineer",
+        "jobTitle": "Graduate Software Engineer",
+        "sfiaLevel": 1,
+        "filename": "soft_eng_academy_pdp",
+        "coreSkills": "AUTONOMY,INFLUENCE,COMPLEXITY,BUSINESSSKILLS,KNOWLEDGE,PROG,EMRG,DESN,TEST,PEMT,RELM,SWDN,SLEN",
+        "specialismSkills": "DENG,DATS,MLNG,PENT,HCEV"
+    },
+    {
+        "type": "Software Engineer",
+        "jobTitle": "Associate Software Engineer",
+        "sfiaLevel": 2,
+        "filename": "soft_eng_associate_pdp",
+        "coreSkills": "AUTONOMY,INFLUENCE,COMPLEXITY,BUSINESSSKILLS,KNOWLEDGE,PROG,EMRG,DESN,TEST,PEMT,RELM,SWDN,SLEN",
+        "specialismSkills": "DENG,DATS,MLNG,PENT,HCEV"
+    },
+    {
+        "type": "Software Engineer",
+        "jobTitle": "Mid Software Engineer",
+        "sfiaLevel": 3,
+        "filename": "soft_eng_mid_pdp",
+        "coreSkills": "AUTONOMY,INFLUENCE,COMPLEXITY,BUSINESSSKILLS,KNOWLEDGE,PROG,EMRG,DESN,TEST,PEMT,RELM,SWDN,SLEN",
+        "specialismSkills": "DENG,DATS,MLNG,PENT,HCEV"
+    },
+    {
+        "type": "Software Engineer",
+        "jobTitle": "Senior Software Engineer",
+        "sfiaLevel": 4,
+        "filename": "soft_eng_senior_pdp",
+        "coreSkills": "AUTONOMY,INFLUENCE,COMPLEXITY,BUSINESSSKILLS,KNOWLEDGE,PROG,EMRG,DESN,TEST,PEMT,RELM,SWDN,SLEN",
+        "specialismSkills": "DENG,DATS,MLNG,PENT,HCEV"
+    },
+    {
+        "type": "Software Engineer",
+        "jobTitle": "Lead Software Engineer",
+        "sfiaLevel": 5,
+        "filename": "soft_eng_lead_pdp",
+        "coreSkills": "AUTONOMY,INFLUENCE,COMPLEXITY,BUSINESSSKILLS,KNOWLEDGE,PROG,EMRG,DESN,TEST,PEMT,RELM,SWDN,SLEN",
+        "specialismSkills": "DENG,DATS,MLNG,PENT,HCEV"
+    },
+    {
+        "type": "Software Engineer",
+        "jobTitle": "Principal Software Engineer",
+        "sfiaLevel": 6,
+        "filename": "soft_eng_principal_pdp",
+        "coreSkills": "AUTONOMY,INFLUENCE,COMPLEXITY,BUSINESSSKILLS,KNOWLEDGE,PROG,EMRG,DESN,TEST,PEMT,RELM,SWDN,SLEN",
+        "specialismSkills": "DENG,DATS,MLNG,PENT,HCEV"
+    }
+]

@@ -1,0 +1,28 @@
+<app-header-nav></app-header-nav>
+
+<div class="parallax-main-one"></div>
+<div class="parallax-splitter-dark">
+    <div id="menu-block" *ngIf="!selectedPDP">
+        <!-- <div class="menu-content-container"> -->
+            <!-- <div class="container"> -->
+                <app-main-intro class="container" ></app-main-intro>
+                <!-- <div class="row justify-content-center">
+                    <div class="col-10 align-self-center">
+                        <app-sfia-selector-form></app-sfia-selector-form>
+                    </div>
+                </div> -->
+            <!-- </div> -->
+        <!-- </div> -->
+    </div>
+    <div id="menu-block-secondary" *ngIf="!selectedPDP">
+        <app-sfia-selector-form (pdpSelected)="onPDPSelected($event)"class="container"></app-sfia-selector-form>
+    </div>
+    <div id="menu-block" *ngIf="selectedPDP">
+        <app-pdp-viewer [PDPJson]="selectedPDP"></app-pdp-viewer>
+    </div>
+</div>
+<div class="parallax-main-two"></div>
+<div class="parallax-main-one"></div>
+<div class="parallax-main-two"></div>
+
+

@@ -1,0 +1,40 @@
+<div class="container">
+
+    <form>
+        <div class="form-group">
+            <label for="form-sfia-level">Please select your target SFIA Level</label>
+            <select class="form-control" id="form-role" (change)="onSFIASelected($event)">
+                <option *ngFor="let sfiaOption of sfiaOptions; index as i">{{sfiaOption.display}}</option>
+            </select>
+        </div>
+
+        <div *ngIf="selectedSFIALevel !== null && selectedSFIALevel > 0">
+            <div class="form-group">
+                <label for="form-select-method">Select By</label>
+                <div class="btn-group col-12" role="group" aria-label="Basic example">
+                    <button type="button" class="btn" [ngClass]="roleSelectorEnabled ? 'btn-success':'btn-secondary'"
+                        (click)="onRoleSelected()">Roles</button>
+                    <button type="button" class="btn" [ngClass]="skillSelectorEnabled ? 'btn-success':'btn-secondary'"
+                        (click)="onSkillsSelected()">Skills</button>
+                </div>
+            </div>
+
+            <hr>
+
+            <app-role-selector *ngIf="roleSelectorEnabled" [sfiaLevel]="selectedSFIALevel"
+                (onRoleSelected)="roleSelected($event)"></app-role-selector>
+            <app-skill-selector *ngIf="skillSelectorEnabled" [sfiaLevel]="selectedSFIALevel"
+                (onRoleCreated)="roleSelected($event)"></app-skill-selector>
+
+            <app-selected-role-viewer *ngIf="selectedRole" [roleDefinition]="selectedRole"></app-selected-role-viewer>
+
+            <div *ngIf="selectedRole !== null || skillSelectorEnabled !== false">
+                <button type="button" (click)=(generatePDP()) class="btn btn-primary col-12 submit-button">Generate
+                    PDP</button>
+            </div>
+            <div *ngIf="selectedRole === null && skillSelectorEnabled === false">
+                <button type="button" class="btn btn-primary col-12 submit-button" disabled>Generate PDP</button>
+            </div>
+        </div>
+    </form>
+</div>

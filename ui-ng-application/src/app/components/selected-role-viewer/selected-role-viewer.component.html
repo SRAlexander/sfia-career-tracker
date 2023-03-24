@@ -1,0 +1,18 @@
+<div class="container" id="selected-role-viewer-container">
+
+    <h3>{{roleDefinition.jobTitle}}</h3>
+
+    <p>The skills that have been pre defined for the role and level you have selected are as follows: </p>
+
+
+    <h4>Core Skills</h4>
+    <ul>
+        <li *ngFor="let skill of roleDefinition.coreSkills.split(',')">{{this.getSkillFullNameFromCode(skill)}}</li>
+    </ul>
+
+    <h4>Specialisms</h4>
+    <ul>
+        <li *ngFor="let skill of roleDefinition.specialismSkills.split(',')">{{this.getSkillFullNameFromCode(skill)}}</li>
+    </ul>
+
+</div>
