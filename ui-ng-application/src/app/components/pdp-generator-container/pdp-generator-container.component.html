@@ -1,0 +1,48 @@
+<div class="container">
+
+    <div *ngIf="!showPdp">
+        <div class="row justify-content-center">
+            <h3 class="col-10">Instructions</h3>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-10">
+                <app-sfia-selector-section (sfiaSelected)="onSFIASelected($event)" [sfiaLevel]="sfiaLevel"></app-sfia-selector-section>
+            </div>
+        </div>
+
+        <div class="row justify-content-center" *ngIf="sfiaLevel > 0">
+            <div class="col-10">
+                <app-creation-type-section [sfiaLevel]="sfiaLevel" [creationType]="creationType"
+                    (creationTypeSelected)="onCreationTypeSelected($event)">
+                </app-creation-type-section>
+            </div>
+        </div>
+
+        <div class="row justify-content-center" *ngIf="sfiaLevel > 0 && creationType == 'roles'">
+            <div class="col-10">
+                <app-role-selector [sfiaLevel]="sfiaLevel" [roleType]="roleType" (onRoleSelected)="onRoleSelected($event)"></app-role-selector>
+            </div>
+        </div>
+
+        <div class="row justify-content-center" *ngIf="sfiaLevel > 0 && creationType == 'skills'">
+            <div class="col-10">
+                <app-skill-selector [selectedCoreSkills]="coreSkills" [selectedSpecialismSkills]="specialismSkills">
+                </app-skill-selector>
+            </div>
+        </div>
+
+        <!-- <div id="menu-block" *ngIf="selectedPDP">
+        <app-pdp-viewer [PDPJson]="selectedPDP" (returnEvent)="onReturnClick()"></app-pdp-viewer>
+    </div> -->
+
+        <div class="d-grid gap-2 col-10 mx-auto">
+            <button class="btn btn-primary btn-block" (click)="generatePDP()">Create PDP</button>
+        </div>
+    </div>
+
+    <div *ngIf="showPdp">
+        <app-pdp-viewer [pdpJson]="generatedPdp" (returnEvent)="returnFromViewer()"></app-pdp-viewer>
+    </div>
+
+</div>

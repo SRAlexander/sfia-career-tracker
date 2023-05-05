@@ -9,7 +9,7 @@ export class RolesService {
   constructor() { }
 
   getFullRoles(): any[] {
-    return data;
+    return JSON.parse(JSON.stringify(data));
   }
 
   getRoleTypes(): any[] {
@@ -19,7 +19,8 @@ export class RolesService {
   }
 
   getFullRoleBySFIAAndType(sfiaLevel: number, roleType: string) {
-    return this.getFullRoles().filter(role => role.sfiaLevel === sfiaLevel && role.type === roleType)
+    let response = this.getFullRoles().filter(role => role.sfiaLevel === sfiaLevel && role.type === roleType)
+    return response;
   }
 
 }

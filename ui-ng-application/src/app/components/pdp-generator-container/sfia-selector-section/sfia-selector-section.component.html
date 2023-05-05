@@ -1,0 +1,20 @@
+<div class="col-12">
+    <form>
+        <div class="form-group">
+            <label for="form-sfia-level">Please select your target SFIA Level</label>
+            <!-- <select class="form-control" id="form-role"  (change)="onSFIASelected($event)">
+                <option *ngFor="let sfiaOption of sfiaOptions; index as i">{{sfiaOption.display}}</option>
+            </select> -->
+
+            <ng-select [items]="sfiaOptions" 
+                bindValue="level" 
+                bindLabel="display" 
+                [(ngModel)]="selectedSFIA" 
+                [ngModelOptions]="{standalone: true}"
+                (change)="onSFIASelected($event)">
+            
+                <!-- <ng-option *ngFor="let sfiaOption of sfiaOptions" [value]="sfiaOption.level">{{sfiaOption.display}}</ng-option> -->
+             </ng-select>
+        </div>
+    </form>
+</div>

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SfiaSelectorFormComponent } from './sfia-selector-form.component';
+import { SfiaSelectorFormComponent } from './sfia-selector-section.component';
 
 describe('SfiaSelectorFormComponent', () => {
   let component: SfiaSelectorFormComponent;

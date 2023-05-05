@@ -1,0 +1,11 @@
+<div>
+    <div class="form-group">
+        <label for="form-select-method">Select By</label>
+        <div class="btn-group col-12" role="group" aria-label="Basic example">
+            <button type="button" class="btn" [ngClass]="skillSelected ? 'btn-success':'btn-secondary'"
+                (click)="onSkillsSelected()">Skills</button>
+            <button type="button" class="btn" [ngClass]="roleSelected ? 'btn-success':'btn-secondary'"
+                (click)="onRoleSelected()">Roles</button>
+        </div>
+    </div>
+</div>

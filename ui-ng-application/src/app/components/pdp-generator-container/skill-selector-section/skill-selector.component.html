@@ -1,0 +1,26 @@
+<div class="form-group">
+
+    <label for="form-skill">Select Core Skills</label>
+
+    <app-custom-typeahead [selectableList]="avaliableSkills" (itemSelected)="addCoreSkill($event)"></app-custom-typeahead>
+    <div class="selected-skills-container">
+        <div class="button-combo" style="display:inline-block" *ngFor="let selectedSkill of selectedCoreSkills; index as j">
+            <button class="btn btn-secondary btn-block btn-left disabled">{{selectedSkill.title}}</button>
+            <button class="btn btn-right btn-danger" (click)="removeCoreSkill(j)"><ng-icon name="bootstrapXCircleFill"></ng-icon></button>
+        </div>
+    </div>
+    
+</div>
+
+<div class="form-group">
+    <label for="form-skill">Select Specialism Skills</label>
+
+    <app-custom-typeahead [selectableList]="avaliableSkills" (itemSelected)="addSpecialismSkill($event)"></app-custom-typeahead>
+    <div class="selected-skills-container">
+        <div class="button-combo" style="display:inline-block" *ngFor="let selectedSkill of selectedSpecialismSkills; index as j">
+            <button class="btn btn-secondary btn-block btn-left disabled">{{selectedSkill.title}}</button>
+            <button class="btn btn-right btn-danger" (click)="removeSpecialismSkill(j)"><ng-icon name="bootstrapXCircleFill"></ng-icon></button>
+        </div>
+    </div>
+
+</div>

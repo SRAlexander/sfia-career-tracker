@@ -1,6 +1,13 @@
 <div class="container" id="selected-role-viewer-container">
 
-    <h3>{{roleDefinition.jobTitle}}</h3>
+    <div class="row">
+        <div class="col-10">
+            <h3>{{roleDefinition.jobTitle}}</h3>
+        </div>
+        <div class="col-2">
+            <h3><ng-icon name="bootstrapMarkdown"></ng-icon><ng-icon name="bootstrapTable"></ng-icon></h3>
+        </div>
+    </div>
 
     <p>The skills that have been pre defined for the role and level you have selected are as follows: </p>
 
@@ -12,7 +19,8 @@
 
     <h4>Specialisms</h4>
     <ul>
-        <li *ngFor="let skill of roleDefinition.specialismSkills.split(',')">{{this.getSkillFullNameFromCode(skill)}}</li>
+        <li *ngFor="let skill of roleDefinition.specialismSkills.split(',')">{{this.getSkillFullNameFromCode(skill)}}
+        </li>
     </ul>
 
 </div>

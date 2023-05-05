@@ -2,6 +2,7 @@
 
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
+@import "~@ng-select/ng-select/themes/default.theme.css";
 
 #site-navigation {
     padding: 8px 12px 8px 12px; 
@@ -113,3 +114,17 @@
 //     background-color: rgba(0,0,0,0.95);
 //     min-height: 90%;
 //   }
+
+.selected-skills-container .button-combo {
+  margin-top: 8px;
+}
+.selected-skills-container .button-combo .btn.btn-left {
+  border-top-right-radius: 0px ;
+  border-bottom-right-radius: 0px ;
+}
+
+.selected-skills-container .button-combo .btn.btn-right {
+  border-top-left-radius: 0px ;
+  border-bottom-left-radius: 0px ;
+  margin-right: 8px;
+}

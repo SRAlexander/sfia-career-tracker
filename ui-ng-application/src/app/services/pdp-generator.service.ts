@@ -24,6 +24,15 @@ export class PdpGeneratorService {
     model.coreSkills.split(",").forEach(skillCode => {
       let foundSkills = this._skillService.getSFIASkillCriiteraByCodeAndLevel(skillCode, model.sfiaLevel);
       let skillTitle = this._skillService.getSFIASkills().filter((skill: { code: string; }) => skill.code === skillCode)[0];
+      if (foundSkills == null || foundSkills.length === 0){
+        foundSkills.push({
+          description: "No SFIA criteria points have been found at this SFIA Level",
+          skillCode: "NOTFOUND",
+          keycode: 0,
+          sfiaLevel: model.sfiaLevel
+        })
+      }
+
       if (typeof skillTitle !== 'undefined') {
         coreSkills = coreSkills.concat({skillsGroup: foundSkills, title: skillTitle.title})
       }
@@ -33,6 +42,15 @@ export class PdpGeneratorService {
     model.specialismSkills.split(",").forEach(skillCode => {
       let foundSkills = this._skillService.getSFIASkillCriiteraByCodeAndLevel(skillCode, model.sfiaLevel);
       let skillTitle = this._skillService.getSFIASkills().filter((skill: { code: string; }) => skill.code === skillCode)[0];
+      
+      if (foundSkills == null || foundSkills.length === 0){
+        foundSkills.push({
+          description: "No SFIA criteria points have been found at this SFIA Level",
+          skillCode: "NOTFOUND",
+          keycode: 0,
+          sfiaLevel: model.sfiaLevel
+        })
+      }
       if (typeof skillTitle !== 'undefined') {
         specialismSkills = specialismSkills.concat({skillsGroup: foundSkills, title: skillTitle.title})
       }

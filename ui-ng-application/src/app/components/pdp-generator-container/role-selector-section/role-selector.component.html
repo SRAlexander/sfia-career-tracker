@@ -1,0 +1,10 @@
+<div class="form-group">
+    <label for="form-role">Role</label>
+
+    <ng-select [items]="primaryRoles" 
+                [(ngModel)]="roleType" 
+                [ngModelOptions]="{standalone: true}"
+                (change)="onRoleSelectedEvent($event)">
+             </ng-select>
+
+</div>

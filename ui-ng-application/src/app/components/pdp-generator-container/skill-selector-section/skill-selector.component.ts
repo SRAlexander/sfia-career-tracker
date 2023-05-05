@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { map } from 'rxjs/internal/operators/map';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChange, SimpleChanges } from '@angular/core';
 import { RoleSkillsModel } from 'src/app/classes/role-skills-model';
 import { SfiaSkillsService } from 'src/app/services/sfia-skills.service';
 
@@ -10,20 +9,25 @@ import { SfiaSkillsService } from 'src/app/services/sfia-skills.service';
 })
 export class SkillSelectorComponent implements OnInit {
 
-  avaliableSkills: any[] = [];
-  selectedCoreSkills: any[] = [{ "code":"AUTONOMY", "title":"Autonomy"},
-                            { "code":"INFLUENCE", "title":"Influence"},
-                            { "code":"COMPLEXITY", "title":"Complexity"},
-                            { "code":"BUSINESSSKILLS", "title":"Business skills"},
-                            { "code":"KNOWLEDGE", "title":"Knowledge"}];
+  @Input() selectedCoreSkills: any[]= [];
+  @Input() selectedSpecialismSkills: any[] = [];
 
-  selectedSpecialismSkills: any[] = [];
+  avaliableSkills: any[] = [];
+  
   createdRole: RoleSkillsModel = new RoleSkillsModel();
+  hasBeenSubmitted: boolean = false;
   
   @Input() sfiaLevel: number = 0;
   @Output() onRoleCreated: EventEmitter<RoleSkillsModel> = new EventEmitter();
 
   constructor(private _sfiaSkillsService : SfiaSkillsService) {
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (this.hasBeenSubmitted) {
+      console.log(changes);
+      this.onRoleCreated.emit(this.createdRole);
+    }
   }
 
   ngOnInit(): void {
@@ -53,7 +57,7 @@ export class SkillSelectorComponent implements OnInit {
   }
 
   addCoreSkill(event: any) {
-    var selectedSkillTitle = event.target.value;
+    var selectedSkillTitle = event.title;
     var selectedSkills = this.avaliableSkills.filter(skill => skill.title === selectedSkillTitle);
 
     if (selectedSkills.length >0 && this.selectedCoreSkills.indexOf(selectedSkills[0]) === -1 && selectedSkills[0].code !== "NA") {
@@ -71,7 +75,7 @@ export class SkillSelectorComponent implements OnInit {
   }
 
   addSpecialismSkill(event: any) {
-    var selectedSkillTitle = event.target.value;
+    var selectedSkillTitle = event.title;
     var selectedSkills = this.avaliableSkills.filter(skill => skill.title === selectedSkillTitle);
 
     if (selectedSkills.length >0 && this.selectedSpecialismSkills.indexOf(selectedSkills[0]) === -1 && selectedSkills[0].code !== "NA") {
@@ -85,6 +89,7 @@ export class SkillSelectorComponent implements OnInit {
   updateCreatedRole() {
     this.createdRole.coreSkills = this.selectedCoreSkills.map(skill => skill.code).join(",");
     this.createdRole.specialismSkills = this.selectedSpecialismSkills.map(skill => skill.code).join(",")
+    this.hasBeenSubmitted = true;
     this.onRoleCreated.emit(this.createdRole);
   }
 }
