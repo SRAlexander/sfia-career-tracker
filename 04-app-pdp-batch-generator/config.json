@@ -1,5 +1,5 @@
 {
-    "sfiaJobSpecLocation":"../pdp-resources/job-roles.xlsx",
+    "sfiaJobSpecLocation":"../pdp-resources/job-roles-sfia.xlsx",
     "sfiaJobSpecSheetName":"Job Roles", 
     "jobTitleColumn":"A",
     "sfiaLevelColumn":"B",
