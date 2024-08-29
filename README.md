@@ -10,7 +10,7 @@ This project is designed to create a SFIA grading checklist based on an individu
 
 # Orgnaisational Setup - Creating your criteria
 
-As of creating this tool, the author does not feel that the SFIA-provided spreadsheet https://sfia-online.org/en/sfia-8/documentation is not in a suitable format for dynamic processing. Therefore there is a pre-step to run to extract all skills and responsibilities into a simple list.
+As of creating this tool, the author does not feel that the SFIA-provided spreadsheet https://sfia-online.org/en/sfia-8/documentation is in a suitable format for dynamic processing. Therefore there is a pre-step to run to extract all skills and responsibilities into a simple list.
 
 Firstly, as an organisation, you will need to sign up for an account to download the SFIA framework spreadsheet, there is a license required at an organisational level, however, you can use a personal account to acquire the spreadsheet if you are testing this tool. You can then download the "sfia-8_en_200221.xlsx" as of 18/12/2022. Please place the file in the SFIA-RESOURCE folder. 
 
