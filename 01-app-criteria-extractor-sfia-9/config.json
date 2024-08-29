@@ -1,0 +1,8 @@
+{
+    "sfiaSkillsSpreadsheetLocation":"../sfia-resources/2024-06-30-sfia-9-beta-skills.xlsx", 
+    "sfiaResponsibiltiesSpreadsheetLocation":"../sfia-resources/2024-06-30-sfia-9-beta-responsibilities.xlsx", 
+    "responsibilitiesMappingsLocation":"../sfia-resources/sfia-mapping-responsibilites-sfia-9.json",
+    "skillMappingsLocation":"../sfia-resources/sfia-mapping-skills-sfia-9.json",
+    "processedOutputFolder":"../outputs/sfia-9/app-criteria-extractor/",
+    "exportFormat":"EXCEL"
+}

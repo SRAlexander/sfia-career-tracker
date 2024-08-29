@@ -21,6 +21,7 @@ type Config struct {
 	ExportFormat                     string `json:"exportFormat"`
 	DefaultSkills                    string `json:"defaultSkills"`
 	SkillColumn                      string `json:"skillColumn"`
+	SkillTitleColumn                 string `json:"skillTitleColumn"`
 	SFIAColumn                       string `json:"sfiaColumn"`
 	KeyCodeColumn                    string `json:"keyColumn"`
 	KeyDescriptionColumn             string `json:"keyDescriptionColumn"`
@@ -62,7 +63,7 @@ func main() {
 		coreSkillsInput = strings.Replace(coreSkillsInput, "CORE", config.DefaultSkills+",", -1)
 	}
 
-	coreSkillsInput = strings.Replace(coreSkillsInput, " ", "", -1)
+	// coreSkillsInput = strings.Replace(coreSkillsInput, " ", "", -1)
 	skills = append(skills, strings.Split(coreSkillsInput, ",")...)
 
 	specialismSkillsInput = strings.Replace(specialismSkillsInput, " ", "", -1)
@@ -96,6 +97,7 @@ func main() {
 func searchAndCreateSkillsModel(file *excelize.File, config Config, skills []string, skillMaps SkillMap, sfiaLevel int) []PostSkillDataModel {
 
 	var skillColumn string = config.SkillColumn
+	var skillTitleColumn string = config.SkillTitleColumn
 	var sfiaColumn string = config.SFIAColumn
 	var keyCodeColumn string = config.KeyCodeColumn
 	var keyDescriptionColumn string = config.KeyDescriptionColumn
@@ -133,12 +135,18 @@ func searchAndCreateSkillsModel(file *excelize.File, config Config, skills []str
 					fmt.Println("Error during conversion")
 				}
 
-				println(columnSkillCode)
-				var skillDescription string = ""
-				for _, skillMap := range skillMaps {
-					if skillMap.Code == columnSkillCode {
-						skillDescription = skillMap.Title
-					}
+				// println(columnSkillCode)
+				// var skillDescription string = ""
+				// for _, skillMap := range skillMaps {
+				// 	if skillMap.Code == columnSkillCode {
+				// 		skillDescription = skillMap.Title
+				// 	}
+				// }
+
+				// fmt.Println(skillTitleColumn + strconv.Itoa(rowCount))
+				skillDescription, err := file.GetCellValue("Sheet1", skillTitleColumn+strconv.Itoa(rowCount))
+				if err != nil {
+					log.Fatal(err)
 				}
 
 				if skillDescription == "" {

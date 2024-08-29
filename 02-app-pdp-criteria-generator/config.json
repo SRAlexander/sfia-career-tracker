@@ -1,11 +1,12 @@
 {
-    "sfiaProcessedSpreadsheetLocation":"../outputs/app-criteria-extractor/1671573058-SFIA-Skill-Criteria.xlsx", 
+    "sfiaProcessedSpreadsheetLocation":"../outputs/sfia-9/app-criteria-extractor/1724947610-SFIA-Skill-Criteria.xlsx", 
     "skillCodeMapLocation": "../pdp-resources/skills.json",
-    "processedOutputFolder":"../outputs/app-pdp-criteria-generator/",
+    "processedOutputFolder":"../outputs/sfia-9/app-pdp-criteria-generator/",
     "exportFormat":"EXCEL",
-    "defaultSkills":"Autonomy,Influence,Complexity,Business skills,Knowledge,MADE",
+    "defaultSkills":"Autonomy,Influence,Complexity,Business skills,Knowledge,MADE,Collaboration,Communication,Complexity,Creativity,Decision making,Digital mindset,Leadership,Learning and professional development,Planning,Problem solving,Security privacy and ethics",
     "skillColumn":"A",
-    "sfiaColumn":"B",
-    "keyColumn":"C",
-    "keyDescriptionColumn":"D"
+    "skillTitleColumn":"B",
+    "sfiaColumn":"C",
+    "keyColumn":"D",
+    "keyDescriptionColumn":"E"
 }

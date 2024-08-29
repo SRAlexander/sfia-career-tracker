@@ -1,9 +1,9 @@
 {
     "templateLocation":"../pdp-resources/template.MD", 
     "skillCodeMapLocation": "../pdp-resources/skills.json",
-    "processedOutputFolder":"../outputs/app-pdp-generator/",
+    "processedOutputFolder":"../outputs/sfia-9/app-pdp-generator/",
     "exportFormat":"EXCEL",
-    "defaultSkills":"Autonomy,Influence,Complexity,Business skills,Knowledge",
+    "defaultSkills":"Autonomy,Influence,Complexity,Business skills,Knowledge,MADE,Collaboration,Communication,Complexity,Creativity,Decision making,Digital mindset,Leadership,Learning and professional development,Planning,Problem solving,Security privacy and ethics",
     "skillColumn":"A",
     "skillTitleColumn":"B",
     "sfiaColumn":"C",

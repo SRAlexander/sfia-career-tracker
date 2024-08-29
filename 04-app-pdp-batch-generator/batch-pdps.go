@@ -1,32 +1,33 @@
 package main
 
 import (
-	"os"
-    "fmt"
-    "log"
-	"io/ioutil"
-	"strconv"
-	"encoding/json"
-    "github.com/xuri/excelize/v2"
-	"os/exec"
 	"bytes"
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"log"
+	"os"
+	"os/exec"
+	"strconv"
+
+	"github.com/xuri/excelize/v2"
 )
 
 type Config struct {
-    SFIAJobSpecLocation string `json:"sfiaJobSpecLocation"`
-	SFIAJobSpecSheetName string `json:"sfiaJobSpecSheetName"`
-    JobTitleColumn string `json:"jobTitleColumn"`
-	FilenameColumn string `json:"filenameColumn"`
-	SFIALevelColumn string `json:"sfiaLevelColumn"`
-	CoreSkillsColumn string `json:"coreSkillsColumn"`
+	SFIAJobSpecLocation    string `json:"sfiaJobSpecLocation"`
+	SFIAJobSpecSheetName   string `json:"sfiaJobSpecSheetName"`
+	JobTitleColumn         string `json:"jobTitleColumn"`
+	FilenameColumn         string `json:"filenameColumn"`
+	SFIALevelColumn        string `json:"sfiaLevelColumn"`
+	CoreSkillsColumn       string `json:"coreSkillsColumn"`
 	SpecialismSkillsColumn string `json:"specialismSkillsColumn"`
 }
 
 type JobRole struct {
-	JobTitle string
-	Filename string
-	SFIALevel string
-	CoreSkills string
+	JobTitle         string
+	Filename         string
+	SFIALevel        string
+	CoreSkills       string
 	SpecialismSkills string
 }
 
@@ -35,10 +36,10 @@ func main() {
 	var config Config
 	json.Unmarshal(loadJSONFileAsByteString("config.json"), &config)
 
-    file, err := excelize.OpenFile(config.SFIAJobSpecLocation)
-    if err != nil {
-        log.Fatal(err)
-    }
+	file, err := excelize.OpenFile(config.SFIAJobSpecLocation)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	var jobRoles []JobRole
 	jobRoles = append(jobRoles, processJobRoles(file, config)...)
@@ -53,35 +54,35 @@ func main() {
 // The behaviours sheet has a different format to skills
 func processJobRoles(file *excelize.File, config Config) []JobRole {
 
-	var rowCount int = 2;
+	var rowCount int = 2
 	var jobRoles []JobRole
 
 	for {
-		columnJobTitle, err := file.GetCellValue(config.SFIAJobSpecSheetName, config.JobTitleColumn + strconv.Itoa(rowCount))
+		columnJobTitle, err := file.GetCellValue(config.SFIAJobSpecSheetName, config.JobTitleColumn+strconv.Itoa(rowCount))
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		if (columnJobTitle == "") {
-			break;
+		if columnJobTitle == "" {
+			break
 		}
 
-		columnFilename, err := file.GetCellValue(config.SFIAJobSpecSheetName, config.FilenameColumn + strconv.Itoa(rowCount))
+		columnFilename, err := file.GetCellValue(config.SFIAJobSpecSheetName, config.FilenameColumn+strconv.Itoa(rowCount))
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		columnSFIALevel, err := file.GetCellValue(config.SFIAJobSpecSheetName, config.SFIALevelColumn + strconv.Itoa(rowCount))
+		columnSFIALevel, err := file.GetCellValue(config.SFIAJobSpecSheetName, config.SFIALevelColumn+strconv.Itoa(rowCount))
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		columnCoreSkills, err := file.GetCellValue(config.SFIAJobSpecSheetName, config.CoreSkillsColumn + strconv.Itoa(rowCount))
+		columnCoreSkills, err := file.GetCellValue(config.SFIAJobSpecSheetName, config.CoreSkillsColumn+strconv.Itoa(rowCount))
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		columnSpecialismSkills, err := file.GetCellValue(config.SFIAJobSpecSheetName, config.SpecialismSkillsColumn + strconv.Itoa(rowCount))
+		columnSpecialismSkills, err := file.GetCellValue(config.SFIAJobSpecSheetName, config.SpecialismSkillsColumn+strconv.Itoa(rowCount))
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -93,7 +94,7 @@ func processJobRoles(file *excelize.File, config Config) []JobRole {
 		jobRole.CoreSkills = columnCoreSkills
 		jobRole.SpecialismSkills = columnSpecialismSkills
 		jobRoles = append(jobRoles, jobRole)
-		
+
 		rowCount++
 	}
 
@@ -109,14 +110,14 @@ func loadJSONFileAsByteString(file string) []byte {
 		fmt.Println(err)
 	}
 
-	fmt.Println("Successfully Opened: " + file) 
+	fmt.Println("Successfully Opened: " + file)
 	byteValue, _ := ioutil.ReadAll(jsonFile)
 	jsonFile.Close()
 	return byteValue
 }
 
 func runPDPCriteriaGenerator(jobRole JobRole) {
-	command := exec.Command("go", "run", "create-pdp-criteria.go", "--sfia-level", jobRole.SFIALevel, "--output-filename", jobRole.Filename +".xlsx", "--core-skills", jobRole.CoreSkills, "--specialism-skills", jobRole.SpecialismSkills)
+	command := exec.Command("go", "run", "create-pdp-criteria.go", "--sfia-level", jobRole.SFIALevel, "--output-filename", jobRole.Filename+".xlsx", "--core-skills", jobRole.CoreSkills, "--specialism-skills", jobRole.SpecialismSkills)
 	fmt.Println(command)
 	command.Dir = "../02-app-pdp-criteria-generator"
 
@@ -130,11 +131,11 @@ func runPDPCriteriaGenerator(jobRole JobRole) {
 		fmt.Println(fmt.Sprint(err) + ": " + stderr.String())
 		return
 	}
-	
+
 }
 
 func runPDPGenerator(jobRole JobRole) {
-	command := exec.Command("go", "run", "pdp-generator.go", "--skill-list", "../outputs/app-pdp-criteria-generator/" + jobRole.Filename +".xlsx" , "--output-filename", jobRole.Filename +".MD")
+	command := exec.Command("go", "run", "pdp-generator.go", "--skill-list", "../outputs/sfia-9/app-pdp-criteria-generator/"+jobRole.Filename+".xlsx", "--output-filename", jobRole.Filename+".MD")
 	fmt.Println(command)
 	command.Dir = "../03-app-pdp-generator"
 
@@ -150,7 +151,7 @@ func runPDPGenerator(jobRole JobRole) {
 	}
 }
 
-func deleteEmpty (s []string) []string {
+func deleteEmpty(s []string) []string {
 	var r []string
 	for _, str := range s {
 		if str != "" {
@@ -159,6 +160,3 @@ func deleteEmpty (s []string) []string {
 	}
 	return r
 }
-
-
-
