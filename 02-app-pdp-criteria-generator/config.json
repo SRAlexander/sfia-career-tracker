@@ -1,5 +1,6 @@
 {
     "sfiaProcessedSpreadsheetLocation":"../outputs/app-criteria-extractor/1671573058-SFIA-Skill-Criteria.xlsx", 
+    "skillCodeMapLocation": "../pdp-resources/skills.json",
     "processedOutputFolder":"../outputs/app-pdp-criteria-generator/",
     "exportFormat":"EXCEL",
     "defaultSkills":"Autonomy,Influence,Complexity,Business skills,Knowledge,MADE",

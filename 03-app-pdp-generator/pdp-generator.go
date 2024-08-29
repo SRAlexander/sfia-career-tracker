@@ -17,6 +17,7 @@ type Config struct {
 	TemplateLocation      string `json:"templateLocation"`
 	ProcessedOutputFolder string `json:"processedOutputFolder"`
 	SkillColumn           string `json:"skillColumn"`
+	SkillTitleColumn      string `json:"skillTitleColumn"`
 	SFIAColumn            string `json:"sfiaColumn"`
 	KeyCodeColumn         string `json:"keyColumn"`
 	KeyDescriptionColumn  string `json:"keyDescriptionColumn"`
@@ -24,14 +25,20 @@ type Config struct {
 
 type SkillDataModel struct {
 	SkillCode           string
+	SkillTitle          string
 	SFIALevel           string
 	KeyPointNumber      string
 	KeyPointDescription string
 }
 
+type SkillMap struct {
+	Code  string
+	Title string
+}
+
 type SkillResponse struct {
-	Skills         []string
-	Specialisms    []string
+	Skills         []SkillMap
+	Specialisms    []SkillMap
 	DetailedSkills []SkillDataModel
 }
 
@@ -78,6 +85,16 @@ func contains(s []string, str string) bool {
 	return false
 }
 
+func skillMapContains(s []SkillMap, value string) bool {
+	for _, v := range s {
+		if v.Code == value {
+			return true
+		}
+	}
+
+	return false
+}
+
 func generateSkills(config Config, sfiaSkillsFile string) SkillResponse {
 
 	file, err := excelize.OpenFile(sfiaSkillsFile)
@@ -86,14 +103,15 @@ func generateSkills(config Config, sfiaSkillsFile string) SkillResponse {
 	}
 
 	var skillColumn string = config.SkillColumn
+	var skillTitleColumn string = config.SkillTitleColumn
 	var sfiaColumn string = config.SFIAColumn
 	var keyCodeColumn string = config.KeyCodeColumn
 	var keyDescriptionColumn string = config.KeyDescriptionColumn
 
 	var rowCount int = 2
 
-	var skills []string
-	var specialisms []string
+	var skills []SkillMap
+	var specialisms []SkillMap
 	var detailedSkills []SkillDataModel
 	var blankLinesFound int = 0
 
@@ -110,12 +128,22 @@ func generateSkills(config Config, sfiaSkillsFile string) SkillResponse {
 				break
 			}
 		} else {
-			if !contains(skills, columnSkillCode) {
+
+			columnSkillTitle, err := file.GetCellValue("Sheet1", skillTitleColumn+strconv.Itoa(rowCount))
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			if !skillMapContains(skills, columnSkillCode) {
+
+				var skillMap SkillMap
+				skillMap.Code = columnSkillCode
+				skillMap.Title = columnSkillTitle
 				if blankLinesFound > 0 {
-					skills = append(skills, columnSkillCode)
-					specialisms = append(specialisms, columnSkillCode)
+					skills = append(skills, skillMap)
+					specialisms = append(specialisms, skillMap)
 				} else {
-					skills = append(skills, columnSkillCode)
+					skills = append(skills, skillMap)
 				}
 			}
 
@@ -136,6 +164,7 @@ func generateSkills(config Config, sfiaSkillsFile string) SkillResponse {
 
 			var foundSkill SkillDataModel
 			foundSkill.SkillCode = columnSkillCode
+			foundSkill.SkillTitle = columnSkillTitle
 			foundSkill.SFIALevel = columnSFIALevel
 			foundSkill.KeyPointNumber = columnKeyNumber
 			foundSkill.KeyPointDescription = columnKeyDescription
@@ -175,10 +204,13 @@ func generatePDP(skillModel SkillResponse, templateLocation string) string {
 	var prefixedSkills []string
 	for skillIndex := 0; skillIndex < len(skillModel.Skills); skillIndex++ {
 		var skillTitle = skillModel.Skills[skillIndex]
-		if contains(skillModel.Specialisms, skillTitle) {
-			skillTitle = skillTitle + " (Specialism)"
+		var displayTitle = "Unknown Skill"
+		if skillMapContains(skillModel.Specialisms, skillTitle.Code) {
+			displayTitle = skillTitle.Title + " | " + skillTitle.Code + " (Specialism)"
+		} else {
+			displayTitle = skillTitle.Title + " | " + skillTitle.Code
 		}
-		prefixedSkills = append(prefixedSkills, "* "+skillTitle)
+		prefixedSkills = append(prefixedSkills, "* "+displayTitle)
 	}
 
 	var skillsInsert = strings.Join(prefixedSkills, "\n")
@@ -189,8 +221,8 @@ func generatePDP(skillModel SkillResponse, templateLocation string) string {
 	for skillIndex := 0; skillIndex < len(skillModel.Skills); skillIndex++ {
 
 		var checkingSkill = skillModel.Skills[skillIndex]
-		var skillTitle = checkingSkill
-		if contains(skillModel.Specialisms, checkingSkill) {
+		var skillTitle = checkingSkill.Title
+		if skillMapContains(skillModel.Specialisms, checkingSkill.Code) {
 			skillTitle = skillTitle + " (Specialism)"
 		}
 
@@ -201,7 +233,7 @@ func generatePDP(skillModel SkillResponse, templateLocation string) string {
 
 		for detailedSkillIndex := 0; detailedSkillIndex < len(skillModel.DetailedSkills); detailedSkillIndex++ {
 			var checkingDetailedSkill = skillModel.DetailedSkills[detailedSkillIndex]
-			if checkingDetailedSkill.SkillCode == checkingSkill {
+			if checkingDetailedSkill.SkillCode == checkingSkill.Code {
 
 				skillChecklists += "| " + checkingDetailedSkill.KeyPointNumber + " | " + checkingDetailedSkill.KeyPointDescription + " | | |  \n"
 				skillChecklists += "| Evidence: <td colspan=3> Insert evidence and reference here... |  \n"

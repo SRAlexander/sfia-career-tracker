@@ -16,6 +16,7 @@ import (
 
 type Config struct {
 	SFIAProcessedSpreadsheetLocation string `json:"sfiaProcessedSpreadsheetLocation"`
+	SFIASkillMapLocation             string `json:"skillCodeMapLocation"`
 	ProcessedOutputFolder            string `json:"processedOutputFolder"`
 	ExportFormat                     string `json:"exportFormat"`
 	DefaultSkills                    string `json:"defaultSkills"`
@@ -30,6 +31,12 @@ type PostSkillDataModel struct {
 	SFIALevel           int
 	KeyPointNumber      int
 	KeyPointDescription string
+	SkillTitle          string
+}
+
+type SkillMap []struct {
+	Code  string `json:"code"`
+	Title string `json:"title"`
 }
 
 func main() {
@@ -52,8 +59,8 @@ func main() {
 
 	var skills []string = []string{}
 	if strings.Index(coreSkillsInput, "CORE") != -1 {
-		coreSkillsInput = strings.Replace(coreSkillsInput, "CORE", config.DefaultSkills + ",", -1)
-	} 
+		coreSkillsInput = strings.Replace(coreSkillsInput, "CORE", config.DefaultSkills+",", -1)
+	}
 
 	coreSkillsInput = strings.Replace(coreSkillsInput, " ", "", -1)
 	skills = append(skills, strings.Split(coreSkillsInput, ",")...)
@@ -67,8 +74,11 @@ func main() {
 		log.Fatal(err)
 	}
 
-	var applicableSkills = searchAndCreateSkillsModel(file, config, skills,sfiaLevel)
-	var specialismApplicableSkills = searchAndCreateSkillsModel(file, config, specialismSkills, sfiaLevel)
+	var skillMaps SkillMap
+	json.Unmarshal(loadJSONFileAsByteString(config.SFIASkillMapLocation), &skillMaps)
+
+	var applicableSkills = searchAndCreateSkillsModel(file, config, skills, skillMaps, sfiaLevel)
+	var specialismApplicableSkills = searchAndCreateSkillsModel(file, config, specialismSkills, skillMaps, sfiaLevel)
 
 	// output JSON file
 	var currentTimestamp = time.Now().Unix()
@@ -83,7 +93,7 @@ func main() {
 	fmt.Println("Created " + config.ProcessedOutputFolder + outputFilename)
 }
 
-func searchAndCreateSkillsModel(file *excelize.File, config Config, skills []string, sfiaLevel int) []PostSkillDataModel {
+func searchAndCreateSkillsModel(file *excelize.File, config Config, skills []string, skillMaps SkillMap, sfiaLevel int) []PostSkillDataModel {
 
 	var skillColumn string = config.SkillColumn
 	var sfiaColumn string = config.SFIAColumn
@@ -123,8 +133,21 @@ func searchAndCreateSkillsModel(file *excelize.File, config Config, skills []str
 					fmt.Println("Error during conversion")
 				}
 
+				println(columnSkillCode)
+				var skillDescription string = ""
+				for _, skillMap := range skillMaps {
+					if skillMap.Code == columnSkillCode {
+						skillDescription = skillMap.Title
+					}
+				}
+
+				if skillDescription == "" {
+					skillDescription = columnSkillCode
+				}
+
 				var foundSkill PostSkillDataModel
 				foundSkill.SkillCode = columnSkillCode
+				foundSkill.SkillTitle = skillDescription
 				foundSkill.SFIALevel = sfiaLevel
 				foundSkill.KeyPointNumber = sfiaInt
 				foundSkill.KeyPointDescription = columnKeyDescription
@@ -191,26 +214,29 @@ func contains(s []string, str string) bool {
 func exportAsExcel(skillModels []PostSkillDataModel, specialismSkillModels []PostSkillDataModel, outputLocation string, currentTimestamp int64, outputFilename string) {
 	file := excelize.NewFile()
 	file.SetCellValue("Sheet1", "A1", "SkillCode")
-	file.SetCellValue("Sheet1", "B1", "SFIA Level")
-	file.SetCellValue("Sheet1", "C1", "Keycode")
-	file.SetCellValue("Sheet1", "D1", "Description")
+	file.SetCellValue("Sheet1", "B1", "Skill Description")
+	file.SetCellValue("Sheet1", "C1", "SFIA Level")
+	file.SetCellValue("Sheet1", "D1", "Keycode")
+	file.SetCellValue("Sheet1", "E1", "Description")
 
 	var insertLocation int = 1
 	for skillItem := 0; skillItem < len(skillModels); skillItem++ {
-		insertLocation += 1;
+		insertLocation += 1
 		file.SetCellValue("Sheet1", "A"+strconv.Itoa(insertLocation), skillModels[skillItem].SkillCode)
-		file.SetCellValue("Sheet1", "B"+strconv.Itoa(insertLocation), skillModels[skillItem].SFIALevel)
-		file.SetCellValue("Sheet1", "C"+strconv.Itoa(insertLocation), skillModels[skillItem].KeyPointNumber)
-		file.SetCellValue("Sheet1", "D"+strconv.Itoa(insertLocation), skillModels[skillItem].KeyPointDescription)
+		file.SetCellValue("Sheet1", "B"+strconv.Itoa(insertLocation), skillModels[skillItem].SkillTitle)
+		file.SetCellValue("Sheet1", "C"+strconv.Itoa(insertLocation), skillModels[skillItem].SFIALevel)
+		file.SetCellValue("Sheet1", "D"+strconv.Itoa(insertLocation), skillModels[skillItem].KeyPointNumber)
+		file.SetCellValue("Sheet1", "E"+strconv.Itoa(insertLocation), skillModels[skillItem].KeyPointDescription)
 	}
 
-	insertLocation += 1; // Leave a space
+	insertLocation += 1 // Leave a space
 	for skillItem := 0; skillItem < len(specialismSkillModels); skillItem++ {
-		insertLocation += 1;
+		insertLocation += 1
 		file.SetCellValue("Sheet1", "A"+strconv.Itoa(insertLocation), specialismSkillModels[skillItem].SkillCode)
-		file.SetCellValue("Sheet1", "B"+strconv.Itoa(insertLocation), specialismSkillModels[skillItem].SFIALevel)
-		file.SetCellValue("Sheet1", "C"+strconv.Itoa(insertLocation), specialismSkillModels[skillItem].KeyPointNumber)
-		file.SetCellValue("Sheet1", "D"+strconv.Itoa(insertLocation), specialismSkillModels[skillItem].KeyPointDescription)
+		file.SetCellValue("Sheet1", "B"+strconv.Itoa(insertLocation), specialismSkillModels[skillItem].SkillTitle)
+		file.SetCellValue("Sheet1", "C"+strconv.Itoa(insertLocation), specialismSkillModels[skillItem].SFIALevel)
+		file.SetCellValue("Sheet1", "D"+strconv.Itoa(insertLocation), specialismSkillModels[skillItem].KeyPointNumber)
+		file.SetCellValue("Sheet1", "E"+strconv.Itoa(insertLocation), specialismSkillModels[skillItem].KeyPointDescription)
 	}
 
 	var jsonOutputLocation string = outputLocation + strconv.Itoa(int(currentTimestamp)) + "-SFIA-Skill-PDP.xlsx"

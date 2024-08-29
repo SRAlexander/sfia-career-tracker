@@ -1,10 +1,12 @@
 {
     "templateLocation":"../pdp-resources/template.MD", 
+    "skillCodeMapLocation": "../pdp-resources/skills.json",
     "processedOutputFolder":"../outputs/app-pdp-generator/",
     "exportFormat":"EXCEL",
     "defaultSkills":"Autonomy,Influence,Complexity,Business skills,Knowledge",
     "skillColumn":"A",
-    "sfiaColumn":"B",
-    "keyColumn":"C",
-    "keyDescriptionColumn":"D"
+    "skillTitleColumn":"B",
+    "sfiaColumn":"C",
+    "keyColumn":"D",
+    "keyDescriptionColumn":"E"
 }
